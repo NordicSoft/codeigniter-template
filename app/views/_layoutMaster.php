@@ -31,8 +31,7 @@
             <link rel="canonical" href="<?=$this->viewbag->canonical?>"/>
         <?php endif; ?>
         
-        <link rel="stylesheet" href="/css/normalize.css">
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/all.css?_=<?= hash_file("crc32", "css/all.css") ?>">
     </head>
     <body>
         <!--[if lte IE 9]>

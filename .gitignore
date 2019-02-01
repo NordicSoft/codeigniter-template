@@ -22,3 +22,6 @@ composer.lock
 *.sublime-project
 /tests/tests/
 /tests/results/
+/node_modules/
+/www/css/all.css
+package-lock.json
