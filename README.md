@@ -21,12 +21,14 @@ Basic website template (skeleton) based on CodeIgniter 3 with some preconfigured
 * [Bootstrap 4](https://getbootstrap.com)
 * [Font Awesome 4](https://fontawesome.com/v4.7.0/)
 * [jQuery 3](https://jquery.com/)
+* SASS skeleton
+
+# Other
+* [Gulp](https://gulpjs.com)
 
 ## To Do
 * JS skeleton
-* SASS skeleton
 * JS & CSS minification
-* [Gulp](https://gulpjs.com)
 * [Babel](https://babeljs.io/)
 * [AOS](https://github.com/michalsnik/aos)
 * [Ion Auth](http://benedmunds.com/ion_auth/)
