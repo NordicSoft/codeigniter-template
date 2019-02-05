@@ -23,7 +23,7 @@ Basic website template (skeleton) based on CodeIgniter 3 with some preconfigured
 * [jQuery 3](https://jquery.com/)
 * SASS skeleton
 
-# Other
+## Other Tools
 * [Gulp](https://gulpjs.com)
 
 ## To Do
