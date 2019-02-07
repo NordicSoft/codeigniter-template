@@ -31,27 +31,23 @@
             <link rel="canonical" href="<?=$this->viewbag->canonical?>"/>
         <?php endif; ?>
         
-        <link rel="stylesheet" href="/css/all.css?_=<?= hash_file("crc32", "css/all.css") ?>">
+        <link rel="stylesheet" href="/css/all.css">
     </head>
     <body>
         <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
-        
+
         <?= $CONTENT ?>
 
-        <script src="/js/jquery-3.3.1.slim.min.js"></script>
-        <script src="/js/popper.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
-
+        <script src="/js/all.js"></script>
         <script id="init-script" type="text/javascript"
                 data-action="<?= $controller.'.'.$method ?>"
                 data-log-enabled="<?php echo ENVIRONMENT !== "production" ? "true" : "false" ?>"
                 data-debug-enabled="<?php echo ENVIRONMENT !== "production" ? "true" : "false" ?>">
-            $(function () { /*app.init();*/ });
+            $(function () { app.init(); });
         </script>
 
-        
         <?php if (ENVIRONMENT === "production"): ?>
             <!-- GA -->
         <?php endif; ?>

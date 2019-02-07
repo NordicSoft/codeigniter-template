@@ -1,15 +1,14 @@
 const gulp = require('gulp'),
+    babel = require("gulp-babel"),
+    concat = require("gulp-concat"),
+    uglify = require("gulp-uglify"),
     sass = require("gulp-sass"),
     postcss = require("gulp-postcss"),
     autoprefixer = require("autoprefixer"),
     mqpacker = require("css-mqpacker"),
     cssnano = require("cssnano"),
+    touch = require("gulp-touch-fd"),
     browserSync = require('browser-sync').create();
-
-function clean(cb) {
-  // body omitted
-  cb();
-}
 
 function browserSyncInit() {
     browserSync.init({
@@ -17,57 +16,66 @@ function browserSyncInit() {
     });
 }
 
-function cssTranspile() {
+function cssBundle() {
     return gulp	
         .src("assets/scss/all.scss")
         .pipe(sass())
         .on("error", sass.logError)
         .pipe(postcss([
             autoprefixer({browsers: ["last 3 versions"]}),
-            mqpacker(),
-            //cssnano()
+            mqpacker()
         ]))
         .pipe(gulp.dest("www/css"))
+        .pipe(touch())
         .pipe(browserSync.stream());
 }
 
-function cssMinify(cb) {
-  // body omitted
-  cb();
+function cssMinify() {
+    return gulp.src("www/css/all.css")
+        .pipe(postcss([
+            cssnano()
+        ]))
+        .pipe(gulp.dest("www/css"))
+        .pipe(touch());
 }
 
-function jsTranspile(cb) {
-  // body omitted
-  cb();
+function jsBundle() {
+    var vendor = [
+        "assets/js/vendor/jquery-3.3.1.js",
+        "assets/js/vendor/jquery.validate.js",
+        "assets/js/vendor/bootstrap/bootstrap.bundle.js",
+        "assets/js/vendor/page.js"
+    ];
+
+    var app = [
+        "assets/js/app/core.js",
+        "assets/js/app/pages/**/*.js",
+        "assets/js/app/index.js"
+    ];
+
+    return gulp.src(vendor.concat(app))
+        .pipe(babel())
+        .pipe(concat("all.js"))
+        .pipe(gulp.dest("www/js"))
+        .pipe(touch())
+        .pipe(browserSync.stream());
 }
 
-function jsBundle(cb) {
-  // body omitted
-  cb();
-}
-
-function jsMinify(cb) {
-  // body omitted
-  cb();
-}
-
-function publish(cb) {
-  // body omitted
-  cb();
+function jsMinify() {
+    return gulp.src("www/js/all.js")
+        .pipe(uglify())
+        .pipe(gulp.dest("www/js"))
+        .pipe(touch());
 }
 
 function watch() {
-    gulp.watch(["assets/scss/**/*.scss"], cssTranspile);
+    gulp.watch(["assets/scss/**/*.scss"], cssBundle);
+    gulp.watch(["assets/js/app/**/*.js"], jsBundle);
 }
 
-exports.default = gulp.parallel(cssTranspile, watch, browserSyncInit);
+exports.default = gulp.parallel(cssBundle, jsBundle, watch, browserSyncInit);
 
 exports.build = gulp.series(
-  clean,
-  gulp.parallel(
-    cssTranspile,
-    gulp.series(jsTranspile, jsBundle)
-  ),
-  gulp.parallel(cssMinify, jsMinify),
-  publish
+  gulp.parallel(cssBundle, jsBundle),
+  gulp.parallel(cssMinify, jsMinify)
 );

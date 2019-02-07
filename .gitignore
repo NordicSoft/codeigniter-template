@@ -25,3 +25,4 @@ composer.lock
 /node_modules/
 /www/css/all.css
 package-lock.json
+/www/js
