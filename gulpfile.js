@@ -12,7 +12,7 @@ const gulp = require('gulp'),
 
 function browserSyncInit() {
     browserSync.init({
-        proxy: "php.ns"
+        proxy: "codeigniter-template.ns"
     });
 }
 
